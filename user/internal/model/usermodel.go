@@ -1,4 +1,4 @@
-package user
+package model
 
 import "github.com/zeromicro/go-zero/core/stores/sqlx"
 
@@ -9,7 +9,6 @@ type (
 	// and implement the added methods in customUserModel.
 	UserModel interface {
 		userModel
-		withSession(session sqlx.Session) UserModel
 	}
 
 	customUserModel struct {
@@ -22,8 +21,4 @@ func NewUserModel(conn sqlx.SqlConn) UserModel {
 	return &customUserModel{
 		defaultUserModel: newUserModel(conn),
 	}
-}
-
-func (m *customUserModel) withSession(session sqlx.Session) UserModel {
-	return NewUserModel(sqlx.NewSqlConnFromSession(session))
 }
